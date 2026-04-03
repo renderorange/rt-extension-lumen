@@ -4,6 +4,10 @@ author:
   - 'Blaine Motsinger <blaine@renderorange.com>'
 build_requires:
   ExtUtils::MakeMaker: 6.59
+test_requires:
+  Test::More: 0
+  Test::CheckManifest: 0
+  Perl::Critic: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.59
 distribution_type: module

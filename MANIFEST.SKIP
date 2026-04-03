@@ -44,3 +44,13 @@ README.md
 
 \.keep
 screenshots/
+\.github/
+tools/
+\.csslintrc
+\.perlcriticrc
+t/css-syntax\.t
+t/js-syntax\.t
+t/manifest\.t
+t/mason-syntax\.t
+t/perl-syntax\.t
+t/version-consistency\.t
