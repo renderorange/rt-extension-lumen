@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.38'
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install CSS linting tools
+      run: npm install -g csslint
+    
+    - name: Install Perl dependencies
+      run: |
+        cpanm --notest Test::More Test::CheckManifest Perl::Critic
+    
+    - name: Run tests
+      run: |
+        AUTHOR_TEST=1 prove -l t/

@@ -1,0 +1,12 @@
+{
+  "box-model": false,
+  "adjoining-classes": false,
+  "ids": false,
+  "important": false,
+  "qualified-headings": false,
+  "unique-headings": false,
+  "fallback-colors": false,
+  "star-property-hack": false,
+  "underscore-property-hack": false,
+  "bulletproof-font-face": false
+}

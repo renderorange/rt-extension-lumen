@@ -1,0 +1,143 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version (e.g., 0.002)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Need full history for changelog
+    
+    - name: Set up Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.38'
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install CSS linting tools
+      run: npm install -g csslint
+    
+    - name: Install Perl dependencies
+      run: |
+        cpanm --notest Test::More Test::CheckManifest Perl::Critic
+    
+    - name: Validate version format
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        if ! [[ $VERSION =~ ^[0-9]+\.[0-9]+$ ]]; then
+          echo "Error: Version must be in format major.minor (e.g., 0.002)"
+          exit 1
+        fi
+        echo "Version format is valid: $VERSION"
+    
+    - name: Get last major release tag
+      id: last-release
+      run: |
+        # Find the last tag that starts with the current major version
+        CURRENT_VERSION="${{ github.event.inputs.version }}"
+        MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
+        
+        # Get all tags starting with the major version, sorted
+        LAST_TAG=$(git tag -l "${MAJOR}.*" | sort -V | tail -1)
+        
+        if [ -z "$LAST_TAG" ]; then
+          echo "No previous release found, using first commit"
+          LAST_TAG=$(git rev-list --max-parents=0 HEAD)
+        fi
+        
+        echo "last_tag=$LAST_TAG" >> $GITHUB_OUTPUT
+        echo "Found last release: $LAST_TAG"
+    
+    - name: Generate changelog
+      id: changelog
+      run: |
+        LAST_TAG="${{ steps.last-release.outputs.last_tag }}"
+        NEW_VERSION="${{ github.event.inputs.version }}"
+        
+        # Generate changelog from commits since last release
+        echo "## Changes since $LAST_TAG" > CHANGELOG.tmp
+        echo "" >> CHANGELOG.tmp
+        
+        # Get conventional commit messages
+        git log "$LAST_TAG"..HEAD --pretty=format:"- %s (%h)" --reverse >> CHANGELOG.tmp
+        
+        # Check if we have any commits
+        if [ ! -s CHANGELOG.tmp ] || [ $(wc -l < CHANGELOG.tmp) -le 2 ]; then
+          echo "- No significant changes" >> CHANGELOG.tmp
+        fi
+        
+        echo "" >> CHANGELOG.tmp
+        cat CHANGELOG.tmp
+        
+        # Save for later steps
+        echo 'changelog<<EOF' >> $GITHUB_OUTPUT
+        cat CHANGELOG.tmp >> $GITHUB_OUTPUT
+        echo 'EOF' >> $GITHUB_OUTPUT
+    
+    - name: Run tests
+      run: |
+        AUTHOR_TEST=1 prove -l t/
+    
+    - name: Update version in files
+      run: |
+        NEW_VERSION="${{ github.event.inputs.version }}"
+        
+        # Update Lumen.pm
+        sed -i "s/our \$VERSION = '[0-9.]\+'/our \$VERSION = '$NEW_VERSION'/" lib/RT/Extension/Lumen.pm
+        
+        # Update META.yml
+        sed -i "s/^version: '[0-9.]\+'/version: '$NEW_VERSION'/" META.yml
+        sed -i "s/^version: [0-9.]\+/version: '$NEW_VERSION'/" META.yml
+        
+        # Show changes
+        git diff
+    
+    - name: Build distribution tarball
+      run: |
+        perl Makefile.PL
+        make manifest
+        make tardist
+        
+        # Find the generated tarball
+        TARBALL=$(ls -1 RT-Extension-Lumen-*.tar.gz | head -1)
+        echo "tarball=$TARBALL" >> $GITHUB_ENV
+        echo "Created tarball: $TARBALL"
+    
+    - name: Commit version updates
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        NEW_VERSION="${{ github.event.inputs.version }}"
+        
+        git add lib/RT/Extension/Lumen.pm META.yml MANIFEST
+        git commit -m "Bump version to $NEW_VERSION"
+        
+        # Create and push tag
+        git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION"
+        git push origin HEAD:${{ github.ref_name }} --tags
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.event.inputs.version }}
+        name: Release ${{ github.event.inputs.version }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        files: ${{ env.tarball }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

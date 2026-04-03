@@ -1,0 +1,7 @@
+severity = gentle
+theme = core
+
+[-Subroutines::ProhibitSubroutinePrototypes]
+[-Modules::ProhibitExcessMainComplexity]
+[-ControlStructures::ProhibitPostfixControls]
+[-ValuesAndExpressions::ProhibitVersionStrings]

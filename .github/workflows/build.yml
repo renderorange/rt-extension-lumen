@@ -1,0 +1,131 @@
+name: Build Distribution
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 0.02)'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.38'
+    
+    - name: Run tests
+      run: |
+        RTHOME=./tools/fake-rt perl Makefile.PL
+        make test
+    
+    - name: Build distribution
+      run: ./tools/build-dist.sh
+
+  release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup git
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+    
+    - name: Setup Perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.38'
+    
+    - name: Run tests
+      run: |
+        RTHOME=./tools/fake-rt perl Makefile.PL
+        make test
+    
+    - name: Generate Changes file
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        DATE=$(date +%Y-%m-%d)
+        
+        # Get previous tag or empty if first release
+        PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        
+        # Generate changelog entry
+        if [ -z "$PREV_TAG" ]; then
+          # First release - all commits
+          CHANGES=$(git log --pretty=format:" - %s" | grep -v "^ - Merge ")
+        else
+          # Subsequent release - commits since last tag
+          CHANGES=$(git log ${PREV_TAG}..HEAD --pretty=format:" - %s" | grep -v "^ - Merge ")
+        fi
+        
+        # Create new entry
+        NEW_ENTRY="${VERSION} ${DATE}"$'\n'"${CHANGES}"
+        
+        # Update Changes file
+        if [ -f Changes ]; then
+          # Prepend new entry with blank line separator
+          { echo "${NEW_ENTRY}"; echo ""; cat Changes; } > Changes.tmp && mv Changes.tmp Changes
+        else
+          # Create new file
+          echo "${NEW_ENTRY}" > Changes
+        fi
+        
+        echo "Generated Changes entry:"
+        head -20 Changes
+    
+    - name: Commit Changes file
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        git add Changes
+        git commit -m "Update Changes for version ${VERSION}" || echo "No changes to commit"
+    
+    - name: Push Changes file
+      run: |
+        git push origin HEAD:${GITHUB_REF}
+    
+    - name: Create tag
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        git tag "v${VERSION}"
+        git push origin "v${VERSION}"
+    
+    - name: Build distribution
+      run: ./tools/build-dist.sh
+    
+    - name: Get release notes
+      id: release_notes
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        # Get content from version line until next version line or end
+        NOTES=$(sed -n "/^${VERSION} /,/^$\|^[0-9]/p" Changes | sed '$d' | head -50)
+        echo "body<<EOF" >> $GITHUB_OUTPUT
+        echo "$NOTES" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ github.event.inputs.version }}
+        name: Release v${{ github.event.inputs.version }}
+        files: RT-Extension-Lumen-*.tar.gz
+        body: ${{ steps.release_notes.outputs.body }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
