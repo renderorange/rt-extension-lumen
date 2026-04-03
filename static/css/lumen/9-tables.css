@@ -1,0 +1,483 @@
+/* ==========================================================================
+   Lumen Theme - Tables & Search Results
+   Clean, readable data tables
+   ========================================================================== */
+
+/* ============================================================
+   Base Table Styles
+   ============================================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   Collection As Table (Search Results)
+   ============================================================ */
+
+table.collection-as-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--text-sm);
+}
+
+/* Table header */
+table.collection-as-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+table.collection-as-table th.collection-as-table {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  text-align: left;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+  user-select: none;
+}
+
+table.collection-as-table th.collection-as-table:first-child {
+  border-radius: var(--radius-md) 0 0 0;
+}
+
+table.collection-as-table th.collection-as-table:last-child {
+  border-radius: 0 var(--radius-md) 0 0;
+}
+
+/* Sortable columns */
+table.collection-as-table th.collection-as-table.sortable {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+table.collection-as-table th.collection-as-table.sortable:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+/* Sort indicators */
+table.collection-as-table th.collection-as-table.sort-asc::after,
+table.collection-as-table th.collection-as-table.sort-desc::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: var(--space-1);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px;
+  opacity: 0.7;
+}
+
+table.collection-as-table th.collection-as-table.sort-asc::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='18 15 12 9 6 15'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+table.collection-as-table th.collection-as-table.sort-desc::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Table body */
+table.collection-as-table tbody tr {
+  border-bottom: 1px solid var(--border-default);
+  transition: background var(--transition-fast);
+}
+
+table.collection-as-table tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
+table.collection-as-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* First row rounded corners */
+table.collection-as-table tbody tr:first-child td:first-child {
+  border-radius: var(--radius-md) 0 0 0;
+}
+
+table.collection-as-table tbody tr:first-child td:last-child {
+  border-radius: 0 var(--radius-md) 0 0;
+}
+
+/* Last row rounded corners */
+table.collection-as-table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 var(--radius-md);
+}
+
+table.collection-as-table tbody tr:last-child td:last-child {
+  border-radius: 0 0 var(--radius-md) 0;
+}
+
+/* Table cells */
+table.collection-as-table td {
+  padding: var(--space-3);
+  vertical-align: middle;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+/* Links in cells */
+table.collection-as-table td a,
+table.collection-as-table th.collection-as-table a {
+  color: var(--text-primary);
+  font-weight: var(--weight-normal);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+table.collection-as-table td a:hover,
+table.collection-as-table th.collection-as-table a:hover {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+/* ============================================================
+   Queue Summary Table
+   ============================================================ */
+
+table.queue-summary,
+table.catalog-summary {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+table.queue-summary th.collection-as-table,
+table.catalog-summary th.collection-as-table {
+  text-align: right;
+}
+
+table.queue-summary td.collection-as-table {
+  text-align: right;
+}
+
+/* Queue name styling */
+.queue-name {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   Row Selection
+   ============================================================ */
+
+/* Checkbox column */
+table.collection-as-table th.checkbox-col,
+table.collection-as-table td.checkbox-col {
+  width: 40px;
+  text-align: center;
+}
+
+table.collection-as-table td.checkbox-col input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--accent-blue);
+}
+
+/* Selected row highlight */
+table.collection-as-table tbody tr.selected,
+table.collection-as-table tbody tr.selected:hover {
+  background: var(--accent-blue-subtle);
+}
+
+/* ============================================================
+   Status Cells
+   ============================================================ */
+
+/* Status badge in table */
+.status-cell {
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-cell .badge {
+  font-size: var(--text-xs);
+}
+
+/* ============================================================
+   Ticket ID Cell
+   ============================================================ */
+
+.ticket-id-cell {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* ============================================================
+   Subject Cell with metadata
+   ============================================================ */
+
+.subject-cell {
+  max-width: 400px;
+}
+
+.subject-cell .subject {
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subject-cell .metadata {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-0-5);
+}
+
+/* ============================================================
+   Date/Time Cells
+   ============================================================ */
+
+.date-cell,
+.time-cell,
+.datetime-cell {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Relative time styling */
+.time-relative {
+  color: var(--text-tertiary);
+}
+
+/* ============================================================
+   Pagination
+   ============================================================ */
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--border-default);
+  margin-top: var(--space-4);
+}
+
+.pagination-info {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pagination .page-item {
+  list-style: none;
+}
+
+.pagination .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.pagination .page-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--accent-blue);
+  color: var(--text-inverse);
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Jump to page */
+.page-jump {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.page-jump input {
+  width: 60px;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+/* ============================================================
+   Bulk Actions Bar
+   ============================================================ */
+
+.bulk-actions-bar {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--accent-blue);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+}
+
+.bulk-actions-bar.visible {
+  display: flex;
+}
+
+.bulk-actions-bar .count {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-inverse);
+}
+
+.bulk-actions-bar .actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.bulk-actions-bar .btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-inverse);
+  border: none;
+}
+
+.bulk-actions-bar .btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.bulk-actions-bar .btn:focus-visible {
+  outline: 2px solid var(--text-inverse);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .bulk-actions-bar .btn {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .bulk-actions-bar .btn:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   Results Header
+   ============================================================ */
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-bottom: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.results-header .title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.results-header .count {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Empty Results
+   ============================================================ */
+
+.no-results {
+  padding: var(--space-10) var(--space-6);
+  text-align: center;
+}
+
+.no-results-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-4);
+  color: var(--text-tertiary);
+  opacity: 0.5;
+}
+
+.no-results-title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.no-results-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Striped Tables (alternate styling)
+   ============================================================ */
+
+.table-striped tbody tr:nth-child(odd) {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .table-striped tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ============================================================
+   Compact Table
+   ============================================================ */
+
+.table-compact th,
+.table-compact td {
+  padding: var(--space-2);
+}
+
+/* ============================================================
+   Column Resize Handle
+   ============================================================ */
+
+.column-resize-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background var(--transition-fast);
+}
+
+.column-resize-handle:hover,
+.column-resize-handle.active {
+  background: var(--accent-blue);
+}

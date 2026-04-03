@@ -1,0 +1,72 @@
+<%doc>
+Lumen Theme - Menu Override
+Renders menu with text first, then chevron on right
+</%doc>
+<%ARGS>
+$menu
+$id => undef
+$toplevel => 1
+$parent_id => ''
+$depth => 0
+</%ARGS>
+<%INIT>
+sub render_menu_items {
+  my (%params) = @_;
+  my $menu = $params{menu};
+  my $depth = $params{depth} || 0;
+  my $parent_id = $params{parent_id} || '';
+  
+  return unless $menu && $menu->children;
+  
+  my $items = $menu->children;
+  return unless @$items;
+  
+  $m->out('<ul' . ($parent_id ? ' class="dropdown-menu"' : '') . '>');
+  
+  foreach my $item (@$items) {
+    next if $item->{hide};
+    
+    my $has_children = $item->children && @{$item->children};
+    my $item_id = $item->{id} || '';
+    my $class = '';
+    $class .= ' has-children' if $has_children;
+    $class .= ' active' if $item->{active};
+    
+    $m->out('<li class="' . $class . '">');
+    
+    if ($item->{raw_html}) {
+      $m->out($item->{raw_html});
+    } else {
+      my $link = $item->{path} || '#';
+      my $title = $item->{title} || '';
+      my $target = $item->{target} ? ' target="' . $item->{target} . '"' : '';
+      
+      $m->out('<a href="' . $link . '"' . $target . '>');
+      
+      # Text first
+      $m->out('<span class="menu-text">' . $title . '</span>');
+      
+      # Then chevron toggle for items with children
+      if ($has_children) {
+        $m->out('<button type="button" class="menu-toggle" aria-label="Toggle"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4.646 6.646a.5.5 0 0 1 .708 0L8 9.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z"/></svg></button>');
+      }
+      
+      $m->out('</a>');
+    }
+    
+    if ($has_children) {
+      render_menu_items(
+        menu => $item,
+        depth => $depth + 1,
+        parent_id => $item_id
+      );
+    }
+    
+    $m->out('</li>');
+  }
+  
+  $m->out('</ul>');
+}
+
+render_menu_items(menu => $menu, depth => $depth, parent_id => $parent_id);
+</%INIT>

@@ -34,7 +34,6 @@ Lumen rewrites RT's frontend from the ground up to:
 
 - remove dependencies on the RT elevator themes
 - replace the top and sub navigation menus with a single sidebar navigation menu
-- better support dynamic layout changes over a wide range of devices
 - simplify the user interface with minimal, unobtrusive, and uniform UI elements
 - update light and dark modes with softer colors
 

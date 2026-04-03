@@ -48,11 +48,9 @@ Lumen rewrites RT's frontend from the ground up to:
 
 =over
 
-=item remove dependencies on Bootstrap, jQuery, and the RT elevator themes
+=item remove dependencies on the RT elevator themes
 
 =item replace the top and sub navigation menus with a single sidebar navigation menu
-
-=item better support dynamic layout changes over a wide range of devices
 
 =item simplify the user interface with minimal, unobtrusive, and uniform UI elements
 

@@ -1,0 +1,90 @@
+%# Lumen Theme - Footer Override
+%# Clean footer with theme toggle support
+% $m->callback( %ARGS );
+    </div><%# Close main-container %>
+  </main><%# Close main-content %>
+</div><%# Close app %>
+
+<footer id="footer">
+  <div class="footer-content">
+    <div class="footer-left">
+% if ($m->{'rt_base_time'}) {
+      <span id="time" class="text-muted"><&|/l&>Time to display</&>: <%Time::HiRes::tv_interval( $m->{'rt_base_time'} )%></span>
+% }
+    </div>
+    <div class="footer-center">
+      <span class="rt-version"><&|/l_unsafe, $RT::VERSION, &>RT [_1]</&></span>
+      <span class="text-muted">-</span>
+      <span class="copyright">&copy; 1996-2025 <a href="https://bestpractical.com/about">Best Practical Solutions, LLC</a></span>
+    </div>
+    <div class="footer-right">
+% if (!$Menu) {
+      <a href="mailto:sales@bestpractical.com" class="text-muted"><&|/l&>Support</&></a>
+% }
+    </div>
+  </div>
+</footer>
+
+<script type="text/javascript">
+window.RT ||= {};
+RT.UserMessages = <% JSON( \%UserMessages ) |n%>;
+
+(function() {
+  var html = document.documentElement;
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var saved = localStorage.getItem('rt-lumen-theme');
+  
+  // Initialize theme on page load
+  if (saved === 'dark' || (saved === null && prefersDark)) {
+    html.setAttribute('data-theme', 'dark');
+  } else {
+    html.setAttribute('data-theme', 'light');
+  }
+  
+  // Global toggle function called by onclick
+  window.toggleLumenTheme = function() {
+    var current = html.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('rt-lumen-theme', next);
+  };
+  
+  // Listen for system theme changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+      if (!localStorage.getItem('rt-lumen-theme')) {
+        html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      }
+    });
+  }
+})();
+</script>
+
+% if ($Debug >= 2 ) {
+% require Data::Dumper;
+% my $d = Data::Dumper->new([\%ARGS], [qw(%ARGS)]);
+<pre>
+<%$d->Dump() %>
+</pre>
+% }
+
+</body>
+</html>
+<%init>
+my %UserMessages;
+
+foreach my $note ( keys %{ $m->notes } ) {
+    if ( my ($message) = $note =~ /^Message\:(\w+)/ ) {
+        if ( my $user_message = RT->System->UserMessages->{$message} ) {
+            $UserMessages{$message} = loc( $user_message );
+        }
+        else {
+            RT->Logger->warning("Couldn't find user message for $message");
+        }
+    }
+}
+</%init>
+<%ARGS>
+$Debug => 0
+$Menu => 1
+</%ARGS>

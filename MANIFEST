@@ -1,3 +1,14 @@
+html/Elements/Footer
+html/Elements/Header
+html/Elements/InlineEditLink
+html/Elements/Logo
+html/Elements/Menu
+html/Elements/PageLayout
+html/Elements/PersonalQuickbar
+html/NoAuth/css/lumen/AfterMenus
+html/NoAuth/css/lumen/BeforeNav
+html/NoAuth/css/lumen/InHeader
+html/Widgets/Spinner
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
@@ -16,3 +27,17 @@ Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
+static/css/lumen/0-variables.css
+static/css/lumen/1-bootstrap-variables.css
+static/css/lumen/10-forms.css
+static/css/lumen/2-reset.css
+static/css/lumen/3-typography.css
+static/css/lumen/4-layout.css
+static/css/lumen/5-navigation.css
+static/css/lumen/6-components.css
+static/css/lumen/7-cards.css
+static/css/lumen/8-tickets.css
+static/css/lumen/9-tables.css
+static/css/lumen/main.css
+static/css/lumen/z-utilities.css
+static/js/lumen-theme.js

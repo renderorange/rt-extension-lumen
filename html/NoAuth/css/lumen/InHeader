@@ -1,0 +1,21 @@
+<%doc>
+Lumen Theme - InHeader Plugin
+Injected in the HTML head section for early theme detection
+</%doc>
+<script type="text/javascript">
+// Lumen Theme - Early theme detection to prevent flash of wrong theme
+(function() {
+  'use strict';
+  
+  // Check for saved theme preference or default to 'light'
+  const savedTheme = localStorage.getItem('rt-lumen-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // Apply theme immediately to prevent flash
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  } else if (prefersDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>

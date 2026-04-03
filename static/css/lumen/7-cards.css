@@ -1,0 +1,440 @@
+/* ==========================================================================
+   Lumen Theme - Cards and Widgets
+   Modern card system with status indicators
+   ========================================================================== */
+
+/* ============================================================
+   Base Card Styles
+   ============================================================ */
+
+/* Base .card is defined in 5-components.css */
+
+/* Card with colored top border */
+.card-border-top {
+  border-top: 3px solid var(--accent-blue);
+}
+
+.card-border-top-red {
+  border-top: 3px solid var(--accent-red);
+}
+
+.card-border-top-green {
+  border-top: 3px solid var(--accent-green);
+}
+
+.card-border-top-orange {
+  border-top: 3px solid var(--accent-orange);
+}
+
+.card-border-top-purple {
+  border-top: 3px solid var(--accent-purple);
+}
+
+/* ============================================================
+   Ticket Info Widgets (Basics, People, etc.)
+   ============================================================ */
+
+.titlebox.card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+/* Widget titles - compact, uppercase */
+.titlebox.card .titlebox-title {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* Fold/expand toggle in titlebox */
+.titlebox .titlebox-title .toggle {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-right: var(--space-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b778c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  transition: transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.titlebox .titlebox-title .toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+/* Support RT's rolled-up class */
+.titlebox.rolled-up .titlebox-content {
+  display: none;
+}
+
+/* Right-aligned icons in titlebox header */
+.titlebox .titlebox-title .right-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Remove borders from inline icon buttons */
+.rt-inline-icon.border {
+  border: none !important;
+}
+
+.titlebox.card .titlebox-title .left,
+.titlebox.card .titlebox-title .left a {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  padding: 0;
+  background: transparent;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Widget content */
+.titlebox.card .card-body {
+  padding: var(--space-3);
+}
+
+/* Hide RT's clear hr inside card-body */
+.card-body hr.clear {
+  display: none;
+}
+
+/* Widget label/value pairs - scoped to simple rows inside widgets */
+.titlebox.card .row:not(:has(.col)):not(:has(.col-sm)) {
+  display: flex;
+  padding: var(--space-1-5) 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.titlebox.card .row:not(:has(.col)):not(:has(.col-sm)):last-child {
+  border-bottom: none;
+}
+
+.titlebox.card .row:not(:has(.col)):not(:has(.col-sm)) > .label {
+  width: 100px;
+  flex-shrink: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.titlebox.card .row:not(:has(.col)):not(:has(.col-sm)) > .value {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+/* Status in basics widget */
+.titlebox.card .value .badge {
+  margin-left: var(--space-1);
+}
+
+/* ============================================================
+   Ticket Widget Status Colors (top border accents)
+   ============================================================ */
+
+/* Red - Basics, Time, Assets */
+.titlebox.card.ticket-info-basics,
+.titlebox.card.ticket-info-times,
+.titlebox.card.asset-basics,
+.titlebox.card.ticket-assets {
+  border-top-color: var(--accent-blue);
+}
+
+/* Blue - Reminders, People */
+.titlebox.card.ticket-info-reminders,
+.titlebox.card.ticket-info-people,
+.titlebox.card.ticket-info-requestor,
+.titlebox.card.ticket-info-squelch,
+.titlebox.card.ticket-info-recipients,
+.titlebox.card.asset-people {
+  border-top-color: var(--accent-purple);
+}
+
+/* Purple - Dates */
+.titlebox.card.ticket-info-dates,
+.titlebox.card.asset-dates {
+  border-top-color: var(--accent-orange);
+}
+
+/* Orange - Attachments */
+.titlebox.card.ticket-info-attachments {
+  border-top-color: var(--accent-orange);
+}
+
+/* Green - Links */
+.titlebox.card.ticket-info-links {
+  border-top-color: var(--accent-green);
+}
+
+/* Description - Teal */
+.titlebox.card.ticket-info-description {
+  border-top-color: var(--accent-green);
+}
+
+/* Custom Fields - Blue */
+.titlebox.card.ticket-info-cfs,
+.titlebox.card.asset-info-cfs {
+  border-top-color: var(--accent-blue);
+}
+
+/* Merge - Gray */
+.titlebox.card.ticket-info-merge {
+  border-top-color: var(--text-tertiary);
+}
+
+/* Articles - Yellow */
+.titlebox.card.ticket-info-article {
+  border-top-color: var(--accent-yellow);
+}
+
+/* Message Details - Blue */
+.titlebox.card.messagedetails {
+  border-top-color: var(--accent-blue);
+}
+
+/* ============================================================
+   Collapsible Cards
+   ============================================================ */
+
+.card.collapsible .card-header {
+  cursor: pointer;
+  user-select: none;
+}
+
+.card.collapsible .card-header:hover {
+  background: var(--bg-hover);
+}
+
+.card.collapsible .card-header::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: var(--space-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b778c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  transition: transform var(--transition-fast);
+}
+
+.card.collapsed .card-header::after {
+  transform: rotate(-90deg);
+}
+
+.card.collapsed .card-body,
+.card.collapsed .card-content {
+  display: none;
+}
+
+/* Toggle icon in header */
+.card-header .toggle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: var(--space-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b778c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+.card-header .toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+/* ============================================================
+   Widget Grid Layout
+   ============================================================ */
+
+.widgets-container {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.widgets-container.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.widgets-container.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.widgets-container.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.widgets-container.sidebar-left {
+  grid-template-columns: 280px 1fr;
+}
+
+.widgets-container.sidebar-right {
+  grid-template-columns: 1fr 280px;
+}
+
+@media (max-width: 1024px) {
+  .widgets-container.cols-3,
+  .widgets-container.cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .widgets-container.cols-2,
+  .widgets-container.cols-3,
+  .widgets-container.cols-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .widgets-container.sidebar-left,
+  .widgets-container.sidebar-right {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Portlet (Sidebar Widget)
+   ============================================================ */
+
+.portlet {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+}
+
+.portlet-header {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.portlet-body {
+  padding: var(--space-3);
+}
+
+/* ============================================================
+   Ticket Overview (Queue/Catalog Lists)
+   ============================================================ */
+
+.ticket-overview {
+  margin-bottom: var(--space-4);
+}
+
+/* Override Bootstrap .table to use row borders like collection-as-table */
+.ticket-overview .table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ticket-overview .table > thead > tr > th,
+.ticket-overview .table > tbody > tr > th {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  background: var(--bg-secondary);
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.ticket-overview .table > tbody > tr > td,
+.ticket-overview .table > thead > tr > td {
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  border: none;
+}
+
+/* Row borders matching collection-as-table */
+.ticket-overview .table > thead > tr {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.ticket-overview .table > tbody > tr {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.ticket-overview .table > tbody > tr:last-child {
+  border-bottom: none;
+}
+
+.ticket-overview .table td a,
+.ticket-overview .table th a {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.ticket-overview .table td a:hover,
+.ticket-overview .table th a:hover {
+  color: var(--accent-blue);
+}
+
+/* ============================================================
+   Box Container
+   ============================================================ */
+
+.boxcontainer {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.boxcontainer > * {
+  min-width: 0; /* Prevent grid blowout */
+}
+
+/* ============================================================
+   Empty State
+   ============================================================ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10) var(--space-6);
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-4);
+  color: var(--text-tertiary);
+  opacity: 0.5;
+}
+
+.empty-state-title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 320px;
+}
+
+/* Loading skeleton is defined in z-utilities.css */

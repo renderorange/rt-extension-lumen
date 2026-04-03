@@ -1,0 +1,79 @@
+<%doc>
+Lumen Theme - BeforeNav Plugin
+Injected before the page navigation is rendered
+</%doc>
+<script type="text/javascript">
+// Lumen Theme - Menu overflow handling
+(function() {
+  'use strict';
+  
+  // Function to handle menu overflow
+  function handleMenuOverflow() {
+    const appNav = document.getElementById('app-nav');
+    if (!appNav) return;
+    
+    // Find the menu container and its UL
+    const menuContainer = appNav.querySelector('.menu-container');
+    if (!menuContainer) return;
+    
+    const menuList = menuContainer.querySelector('ul');
+    if (!menuList) return;
+    
+    const menuItems = menuList.querySelectorAll(':scope > li');
+    const overflowThreshold = window.innerHeight - 200;
+    let totalHeight = 0;
+    let overflowStarted = false;
+    
+    // Find or create overflow menu
+    let overflowMenu = menuList.querySelector('.menu-overflow');
+    if (!overflowMenu) {
+      overflowMenu = document.createElement('li');
+      overflowMenu.className = 'menu-overflow dropdown';
+      overflowMenu.innerHTML = '<a href="#" class="dropdown-toggle"><% loc('More') |n %></a><ul class="dropdown-menu"></ul>';
+      menuList.appendChild(overflowMenu);
+    }
+    
+    const overflowContainer = overflowMenu.querySelector('.dropdown-menu');
+    overflowContainer.innerHTML = '';
+    
+    menuItems.forEach(function(item) {
+      if (item.classList.contains('menu-overflow')) return;
+      
+      totalHeight += item.offsetHeight;
+      
+      if (overflowStarted || totalHeight > overflowThreshold) {
+        overflowStarted = true;
+        item.classList.add('in-overflow');
+        item.classList.remove('visible-menu-item');
+        // Clone to overflow
+        const clone = item.cloneNode(true);
+        clone.classList.remove('in-overflow');
+        overflowContainer.appendChild(clone);
+      } else {
+        item.classList.remove('in-overflow');
+        item.classList.add('visible-menu-item');
+      }
+    });
+    
+    // Show/hide overflow menu
+    if (overflowContainer.children.length === 0) {
+      overflowMenu.style.display = 'none';
+    } else {
+      overflowMenu.style.display = '';
+    }
+  }
+  
+  // Handle on load and resize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleMenuOverflow);
+  } else {
+    handleMenuOverflow();
+  }
+  
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(handleMenuOverflow, 150);
+  });
+})();
+</script>

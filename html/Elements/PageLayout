@@ -1,0 +1,22 @@
+%# Lumen Theme - PageLayout Override
+%# Page navigation and topactions moved to Header quickbar-secondary
+% my $style = GetStylesheet();
+
+% my $beforenav_plugin = "/NoAuth/css/".$style."/BeforeNav";
+% if ($m->comp_exists($beforenav_plugin) ) {
+<& $beforenav_plugin &>
+% }
+
+% my $aftermenu_plugin = "/NoAuth/css/".$style."/AfterMenus";
+% if ($m->comp_exists($aftermenu_plugin) ) {
+<& $aftermenu_plugin &>
+% }
+
+<div id="body">
+% $m->callback( %ARGS, CallbackName => 'BeforeBody' );
+<& /Elements/SystemWarnings &>
+% $m->flush_buffer();
+<%ARGS>
+$title => $m->callers(-1)->path
+$show_menu => 1
+</%ARGS>

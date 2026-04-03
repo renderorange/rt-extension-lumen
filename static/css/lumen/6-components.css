@@ -1,0 +1,636 @@
+/* ==========================================================================
+   Lumen Theme - Components
+   Buttons, inputs, badges, and other UI elements
+   ========================================================================== */
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary Button */
+.btn-primary {
+  background: var(--accent-blue);
+  color: var(--text-inverse);
+  border-color: var(--accent-blue);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-blue-hover);
+  border-color: var(--accent-blue-hover);
+  color: var(--text-inverse);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* Ghost Button */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Danger Button */
+.btn-danger {
+  background: var(--accent-red);
+  color: var(--text-inverse);
+  border-color: var(--accent-red);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--accent-red-hover);
+  border-color: var(--accent-red-hover);
+  color: var(--text-inverse);
+}
+
+/* Success Button */
+.btn-success {
+  background: var(--accent-green);
+  color: var(--text-inverse);
+  border-color: var(--accent-green);
+}
+
+.btn-success:hover:not(:disabled) {
+  background: var(--accent-green-hover);
+  border-color: var(--accent-green-hover);
+  color: var(--text-inverse);
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.btn-lg {
+  padding: var(--space-2-5) var(--space-4);
+  font-size: var(--text-md);
+}
+
+/* Icon-only Button */
+.btn-icon {
+  padding: var(--space-2);
+  aspect-ratio: 1;
+}
+
+.btn-icon.btn-sm {
+  padding: var(--space-1);
+}
+
+.btn-icon.btn-lg {
+  padding: var(--space-2-5);
+}
+
+/* Full Width Button */
+.btn-block {
+  width: 100%;
+}
+
+/* RT Legacy Input Buttons */
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+/* RT's .btn class on inputs */
+input.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+/* Primary buttons */
+input[type="submit"],
+input.btn-primary,
+input.btn.btn-primary {
+  background: var(--accent-blue);
+  color: var(--text-inverse);
+  border-color: var(--accent-blue);
+}
+
+input[type="submit"]:hover:not(:disabled),
+input.btn-primary:hover:not(:disabled),
+input.btn.btn-primary:hover:not(:disabled) {
+  background: var(--accent-blue-hover);
+  border-color: var(--accent-blue-hover);
+  color: var(--text-inverse);
+}
+
+/* Secondary/Reset buttons */
+input[type="reset"],
+input.btn-secondary,
+input.btn.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+input[type="reset"]:hover:not(:disabled),
+input.btn-secondary:hover:not(:disabled),
+input.btn.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* Button elements */
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+button.btn-primary {
+  background: var(--accent-blue);
+  color: var(--text-inverse);
+  border-color: var(--accent-blue);
+}
+
+button.btn-primary:hover:not(:disabled) {
+  background: var(--accent-blue-hover);
+  border-color: var(--accent-blue-hover);
+}
+
+button.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+button.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+/* Focus states */
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+input[type="button"]:focus-visible,
+input.btn:focus-visible,
+button.btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Disabled states */
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+input[type="button"]:disabled,
+input.btn:disabled,
+button.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Width auto utility */
+.w-auto {
+  width: auto !important;
+}
+
+/* Form controls, labels, hints, errors now in 9-forms.css and Bootstrap */
+
+/* ============================================================
+   Checkboxes and Radio Buttons
+   ============================================================ */
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.form-check-input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent-blue);
+}
+
+.form-check-label {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Radio buttons */
+input[type="radio"] {
+  accent-color: var(--accent-blue);
+}
+
+/* ============================================================
+   Badges and Tags
+   (Bootstrap provides .badge base styling)
+   ============================================================ */
+
+/* Tag variant */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-0-5) var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-full);
+  line-height: 1.2;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+/* Lumen status badge overrides */
+.badge {
+  text-transform: capitalize;
+}
+
+.badge-new {
+  background: var(--status-new-bg);
+  color: var(--status-new);
+}
+
+.badge-open,
+.badge-open.active {
+  background: var(--status-open-bg);
+  color: var(--status-open);
+}
+
+.badge-pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending);
+}
+
+.badge-resolved {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved);
+}
+
+.badge-closed {
+  background: var(--status-closed-bg);
+  color: var(--status-closed);
+}
+
+/* Priority Badges */
+.badge-priority-low {
+  background: var(--accent-green-subtle);
+  color: var(--accent-green);
+}
+
+.badge-priority-normal {
+  background: var(--accent-blue-subtle);
+  color: var(--accent-blue);
+}
+
+.badge-priority-high {
+  background: var(--accent-orange-subtle);
+  color: var(--accent-orange);
+}
+
+.badge-priority-critical {
+  background: var(--accent-red-subtle);
+  color: var(--accent-red);
+}
+
+/* Tags (removable) */
+.tag {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.tag-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: var(--space-0-5);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.tag-remove:hover {
+  opacity: 1;
+  background: var(--bg-hover);
+}
+
+.tag-remove:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.card-body {
+  padding: var(--space-4);
+}
+
+.card-footer {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-default);
+  background: var(--bg-secondary);
+}
+
+/* Card Variants */
+.card-compact .card-header {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.card-compact .card-body {
+  padding: var(--space-3);
+}
+
+/* ============================================================
+   TitleBox (RT Widget/Portlet)
+   ============================================================ */
+
+.titlebox {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.titlebox .titlebox-title {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+  background: transparent;
+}
+
+.titlebox .titlebox-title .left,
+.titlebox .titlebox-title .left a {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  padding: 0;
+  background: transparent;
+  flex: 1;
+  min-width: 0;
+}
+
+.titlebox .titlebox-title .left a:hover {
+  color: var(--text-primary);
+}
+
+/* Right-aligned icons in titlebox */
+.titlebox .titlebox-title .right-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.titlebox .titlebox-content,
+.titlebox .card-body {
+  padding: var(--space-3) var(--space-4);
+}
+
+.titlebox .card-body {
+  padding: var(--space-3) var(--space-4);
+}
+
+/* Titlebox header background variant */
+.titlebox.header-blue .titlebox-title {
+  background: var(--accent-blue);
+}
+
+.titlebox.header-blue .titlebox-title .left,
+.titlebox.header-blue .titlebox-title .left a {
+  color: var(--text-inverse);
+  background: transparent;
+}
+
+/* ============================================================
+   Alerts / Messages
+   ============================================================ */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.alert-info {
+  background: var(--accent-blue-subtle);
+  color: var(--accent-blue);
+}
+
+.alert-success {
+  background: var(--accent-green-subtle);
+  color: var(--accent-green);
+}
+
+.alert-warning {
+  background: var(--accent-yellow-subtle);
+  color: var(--accent-yellow-text);
+}
+
+.alert-danger {
+  background: var(--accent-red-subtle);
+  color: var(--accent-red);
+}
+
+/* Results box (search results header) */
+div.results .titlebox-title {
+  background: var(--bg-tertiary);
+  border-color: var(--border-default);
+}
+
+div.results .titlebox-content {
+  background: var(--bg-secondary);
+  border-color: var(--border-default);
+}
+
+/* ============================================================
+   Tooltips
+   ============================================================ */
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-1) var(--space-2);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  z-index: var(--z-tooltip);
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* ============================================================
+   Loading States
+   ============================================================ */
+
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   Dividers
+   ============================================================ */
+
+.divider {
+  height: 1px;
+  background: var(--border-default);
+  margin: var(--space-4) 0;
+}
+
+.divider-vertical {
+  width: 1px;
+  height: 100%;
+  background: var(--border-default);
+  margin: 0 var(--space-4);
+}

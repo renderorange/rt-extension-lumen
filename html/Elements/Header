@@ -1,0 +1,245 @@
+%# Lumen Theme - Header Override
+%# Simplified header with data-theme support and modern layout
+% unless ($SkipDoctype) {
+<!DOCTYPE html>
+% }
+
+<html lang="<% $lang %>">
+  <head>
+    <title><%$Title%></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+% if ( !RT::Interface::Web::RequestENV('HTTP_HX_REQUEST') ) {
+
+<& JavascriptConfig, Language => $lang &>
+
+% for my $cssfile ( @css_files ) {
+<link rel="stylesheet" href="<%RT->Config->Get('WebPath')%><% $cssfile %>" type="text/css" media="all" />
+% }
+
+<script src="<%RT->Config->Get('WebPath')%>/static/js/lumen-theme.js"></script>
+
+% for (keys %{$LinkRel || {}}) {
+    <link rel="<% $_ %>" href="<% RT->Config->Get('WebPath') . $LinkRel->{$_} %>" />
+% }
+<link rel="shortcut icon" href="<%RT->Config->Get('WebImagesURL')%>favicon.png" type="image/png" />
+
+% if ( $RSSAutoDiscovery ) {
+    <link rel="alternate" href="<%$RSSAutoDiscovery%>" type="application/rss+xml" title="RSS RT Search" />
+% }
+
+% my $stylesheet_plugin = "/NoAuth/css/".$style."/InHeader";
+% if ($m->comp_exists($stylesheet_plugin) ) {
+<& $stylesheet_plugin &>
+% }
+
+<!-- Site CSS from theme editor -->
+<style type="text/css" media="all" id="sitecss">
+% if (blessed(RT->System) and my $attr = RT->System->FirstAttribute('UserCSS')) {
+<% $attr->Content |n %>
+% }
+</style>
+% $m->callback( %ARGS, CallbackName => 'Head', ARGSRef => \%ARGS );
+
+<& HeaderJavascript, focus => $Focus, onload => $onload, RichText => $RichText, Language => $lang &>
+
+<& /Elements/Framekiller &>
+
+% $m->callback( CallbackName => 'EndOfHead', ARGSRef => \%ARGS );
+
+% } else {
+% $m->callback( CallbackName => 'BoostedEndOfHead', ARGSRef => \%ARGS );
+% }
+</head>
+  <body hx-boost="true" class="<% join( ' ',@{$ARGS{'BodyClass'}} ) %>">
+<div id="app">
+% if ( $ShowMenu ) {
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <& /Elements/Logo, %ARGS, Size => 'Small' &>
+    </div>
+    <nav id="app-nav" role="navigation" aria-label="<% loc('Main navigation') %>">
+      <& /Elements/Menu, menu => Menu() &>
+    </nav>
+  </aside>
+% }
+
+  <main id="main-content">
+% if ( $ShowBar || $ShowTitle ) {
+    <header id="top-header">
+% if ($ShowBar) {
+      <div id="quickbar">
+        <div class="quickbar-left">
+% if (!$ShowMenu) {
+          <& /Elements/Logo, %ARGS, Size => 'Small' &>
+% }
+% if ($ShowTitle) {
+          <div id="page-title">
+            <h1 <% $TitleTrigger ? qq{hx-trigger="$TitleTrigger"} : '' |n %> <% $TitleSource ? qq{hx-get="$TitleSource"} : '' |n %>><% $Title %></h1>
+          </div>
+% }
+        </div>
+        <div class="quickbar-right">
+% if ( $session{CurrentUser} && $session{CurrentUser}->Id ) {
+%   if ( PageMenu()->children ) {
+          <nav id="page-navigation" aria-label="<% loc('Page navigation') %>">
+            <& /Elements/Menu, menu => PageMenu(), id => 'page-menu' &>
+          </nav>
+%   }
+%   if ( PageWidgets()->children ) {
+          <div id="topactions">
+            <& /Elements/WidgetBar, menu => PageWidgets() &>
+          </div>
+%   }
+          <button type="button" class="theme-toggle" id="theme-toggle" aria-label="<% loc('Toggle dark mode') %>" onclick="toggleLumenTheme()">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+          <& /Elements/PersonalQuickbar, %ARGS &>
+% }
+        </div>
+      </div>
+% }
+    </header>
+% }
+
+% if ( $ShowMenu
+%    && RT::Interface::Web->ModernClient()
+%    && ( $DECODED_ARGS->{ModernClient} // 1 )
+%    && !RT::Interface::Web::RequestENV('HTTP_HX_REQUEST')
+%    && ( RT::Interface::Web::RequestENV('REQUEST_METHOD') // 'GET' ) eq 'GET'
+%    && $session{CurrentUser}
+%    && $session{CurrentUser}->Id ) {
+    <div class="<% join( ' ', @{$ARGS{'MainContainerClass'}} ) %>"
+      hx-get="<% RT::Interface::Web::RequestENV('REQUEST_URI') %>"
+      hx-trigger="revealed once"
+      hx-target="this"
+      hx-select=".main-container"
+      hx-swap="outerHTML"
+      <% $id && qq[id="comp-$id"] |n %>
+    >
+      <& /Widgets/Spinner &>
+      <& Footer &>
+% $m->abort;
+% } else {
+    <div class="<% join( ' ', @{$ARGS{'MainContainerClass'}} ) %>" <% $id && qq[id="comp-$id"] |n %>>
+
+      <div
+        hx-get="<% RT::Interface::Web::RequestENV('REQUEST_URI') %>"
+        hx-trigger="reload consume from:.main-container, mainContainerChanged from:body"
+        hx-target="closest .main-container"
+        hx-select=".main-container"
+        hx-swap="outerHTML"
+      ></div>
+% }
+
+% if ( !$m->notes('render-dashboard-email') ) {
+<div id="hx-boost-spinner" class="invisible">
+  <& /Widgets/Spinner, Boost => 1 &>
+</div>
+% }
+
+% if ($Refresh && $Refresh =~ /^(\d+)/ && $1 > 0) {
+%   my $URL = $m->notes->{RefreshURL}; $URL = $URL ? ";URL=$URL" : "";
+    <meta http-equiv="refresh" content="<% "$1$URL" %>" />
+% }
+
+<div class="modal" id="dynamic-modal"></div>
+
+<%INIT>
+my $lang = 'en';
+$lang = $session{'CurrentUser'}->LanguageHandle->language_tag
+     if $session{'CurrentUser'}
+     && $session{'CurrentUser'}->LanguageHandle
+     && $session{'CurrentUser'}->LanguageHandle->language_tag;
+
+$m->comp('/Elements/HttpResponseHeaders');
+
+my $id = $m->request_comp->path;
+$id =~ s|^/||g;
+$id =~ s|/|-|g;
+$id =~ s|\.html$||g;
+$id =~ s|index$||g
+    if $id ne 'index';
+$id =~ s|-$||g;
+
+my $style = GetStylesheet();
+my @css_files;
+if ( RT->Config->Get('DevelMode') ) {
+    @css_files = map { "/static/css/$_" } "$style/main.css", RT->Config->Get('CSSFiles');
+}
+else {
+    my $key =
+      RT::Interface::Web::SquishedCSS( $style )->Key;
+    @css_files = "/NoAuth/css/$style/squished-$key.css";
+}
+$m->callback( CallbackName => "MassageCSSFiles", CSSFiles => \@css_files, ARGSRef => \%ARGS );
+
+push @{$ARGS{'BodyClass'}}, lc $style;
+push @{$ARGS{'MainContainerClass'}}, 'main-container';
+
+if ( $session{CurrentUser} && $session{CurrentUser}->Id ) {
+    require RT::Interface::Web::MenuBuilder;
+
+    if ( RT::Interface::Web::RequestENV('HTTP_HX_REQUEST') ) {
+        $r->headers_out->{'HX-Reselect'} = '.main-container';
+        $r->headers_out->{'HX-Retarget'} = '.main-container';
+        $r->headers_out->{'HX-Reswap'}   = 'outerHTML';
+        RT::Interface::Web::MenuBuilder::BuildMainNav( Menu(), %ARGS ) if $ARGS{BuildMainMenu};
+
+        my $request_path = $HTML::Mason::Commands::r->path_info;
+        $request_path =~ s!/{2,}!/!g;
+        if ( $request_path =~ m{^/SelfService/} ) {
+            RT::Interface::Web::MenuBuilder::BuildSelfServicePageNav( $request_path, PageWidgets(), PageMenu(), %ARGS );
+        }
+        else {
+            RT::Interface::Web::MenuBuilder::BuildPageNav( $request_path, PageWidgets(), PageMenu(), %ARGS );
+        }
+    }
+    elsif ( Menu() ) {
+        my $request_path = $HTML::Mason::Commands::r->path_info;
+        $request_path =~ s!/{2,}!/!g;
+
+        if ( $request_path =~ m{^/SelfService/} ) {
+            RT::Interface::Web::MenuBuilder::BuildSelfServiceMainNav( Menu(), %ARGS );
+        }
+        else {
+            RT::Interface::Web::MenuBuilder::BuildMainNav( Menu(), %ARGS );
+        }
+
+        my $app_overflow = Menu()->child( overflow => title => loc('More'), sort_order => 99999);
+        $app_overflow->child(will_be_deleted => raw_html => '');
+
+        if ( $request_path =~ m{^/SelfService/} ) {
+            RT::Interface::Web::MenuBuilder::BuildSelfServicePageNav( $request_path, PageWidgets(), PageMenu(), %ARGS );
+        }
+        else {
+            RT::Interface::Web::MenuBuilder::BuildPageNav( $request_path, PageWidgets(), PageMenu(), %ARGS );
+        }
+    }
+}
+</%INIT>
+
+<%ARGS>
+$Focus => ''
+$Title =>  'RT'
+$Refresh => 0
+$ShowBar => 1
+$ShowTitle => 1
+$ShowMenu => $session{CurrentUser} && $session{CurrentUser}->Id && Menu() && !RT::Interface::Web::RequestENV('HTTP_HX_REQUEST') ? 1 : 0
+$URL => undef
+$RSSAutoDiscovery => undef
+$onload => undef
+$LinkRel => undef
+$SkipDoctype => 0
+$RichText => 1
+$BodyClass => undef
+$MainContainerClass => undef
+$TitleTrigger => ''
+$TitleSource => ''
+</%ARGS>

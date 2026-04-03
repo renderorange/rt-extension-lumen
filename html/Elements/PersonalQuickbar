@@ -1,0 +1,54 @@
+%# Lumen Theme - PersonalQuickbar Override
+%# Inline user menu with dropdown
+<%ARGS>
+$Prefs => '/Prefs/Other.html'
+</%ARGS>
+<div id="user-menu">
+% if ($session{'CurrentUser'} && $session{'CurrentUser'}->Id) {
+  <button type="button" class="user-menu-toggle" aria-haspopup="true" aria-expanded="false">
+    <span class="user-name"><% $session{'CurrentUser'}->Name %></span>
+    <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <ul class="user-dropdown" role="menu">
+    <li><a href="<%RT->Config->Get('WebPath')%>/User/Summary.html?id=<% $session{'CurrentUser'}->Id %>"><&|/l&>Profile</&></a></li>
+    <li><a href="<%RT->Config->Get('WebPath')%>/Prefs/Other.html"><&|/l&>Settings</&></a></li>
+    <li class="divider"></li>
+    <li><a href="<%RT->Config->Get('WebPath')%>/NoAuth/Logout.html"><&|/l&>Logout</&></a></li>
+  </ul>
+% } else {
+  <a href="<%RT->Config->Get('WebPath')%>/NoAuth/Login.html" class="login-link"><&|/l&>Login</&></a>
+% }
+</div>
+
+<script type="text/javascript">
+// User menu dropdown toggle
+(function() {
+  const toggle = document.querySelector('.user-menu-toggle');
+  const dropdown = document.querySelector('.user-dropdown');
+  
+  if (toggle && dropdown) {
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', !isExpanded);
+      dropdown.classList.toggle('show');
+    });
+    
+    // Close on outside click
+    document.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      dropdown.classList.remove('show');
+    });
+    
+    // Close on escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        toggle.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('show');
+      }
+    });
+  }
+})();
+</script>

@@ -1,0 +1,31 @@
+<div class="spinner">
+  <div class="<% $Class %>">
+    <svg class="lumen-spinner-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="<% $Size %>" height="<% $Size %>" fill="none">
+      <circle cx="25" cy="25" r="20" stroke="var(--border-default)" stroke-width="4" opacity="0.25"></circle>
+      <circle cx="25" cy="25" r="20" stroke="var(--text-tertiary)" stroke-width="4" stroke-linecap="round" stroke-dasharray="90 40">
+        <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.8s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+</div>
+
+<%INIT>
+if ( !$Class ) {
+    if ( $Boost ) {
+        $Class = 'd-flex justify-content-center rt-boost';
+    }
+    elsif ( $Placeholder ) {
+        $Class = 'd-flex justify-content-center rt-placeholder';
+    }
+    else {
+        $Class = 'htmx-indicator position-absolute top-50 start-50 translate-middle';
+    }
+}
+</%INIT>
+
+<%ARGS>
+$Class => ''
+$Size => 24
+$Boost => undef
+$Placeholder => undef
+</%ARGS>

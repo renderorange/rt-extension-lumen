@@ -1,0 +1,11 @@
+<a hx-boost="false" class="inline-edit-toggle edit" href="#" aria-label="<% $edit_label %>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<% $edit_label %>">
+  <span class="rt-inline-icon border rounded"><% GetSVGImage(Name => 'pencil') |n %></span>\
+</a>
+<a class="inline-edit-toggle cancel hidden" href="#" aria-label="<% $cancel_label %>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<% $cancel_label %>">
+  <span class="rt-inline-icon border rounded"><% GetSVGImage(Name => 'close') |n %></span>\
+</a>
+
+<%INIT>
+my $edit_label = $m->interp->apply_escapes( loc("Edit"), 'h' );
+my $cancel_label = $m->interp->apply_escapes( loc("Cancel"), 'h');
+</%INIT>

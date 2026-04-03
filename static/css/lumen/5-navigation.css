@@ -1,0 +1,297 @@
+/* ==========================================================================
+   Lumen Theme - Navigation
+   ========================================================================== */
+
+/* ============================================================
+   App Navigation (Sidebar Menu)
+   ============================================================ */
+
+#app-nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#app-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#app-nav > ul {
+  flex: 1;
+}
+
+#app-nav ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+#app-nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1-5) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  margin: 0 var(--space-1);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Prevent double tooltip: suppress native title on nav links and children */
+#app-nav ul li a [title] {
+  pointer-events: auto;
+}
+
+#app-nav ul li a:hover {
+  background: var(--bg-hover);
+  text-decoration: none;
+}
+
+#app-nav ul li.active > a {
+  color: var(--text-primary);
+  background: var(--bg-active);
+  font-weight: var(--weight-semibold);
+}
+
+/* Menu text */
+.menu-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Menu toggle chevron (on right side) */
+.menu-toggle {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.menu-toggle:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.menu-toggle svg {
+  width: 12px;
+  height: 12px;
+  transition: transform var(--transition-fast);
+}
+
+/* Rotate chevron when open */
+li.has-children.open > .menu-toggle svg {
+  transform: rotate(180deg);
+}
+
+/* ============================================================
+   Submenu (Nested)
+   ============================================================ */
+
+#app-nav li.has-children ul {
+  display: none;
+  padding-left: var(--space-4);
+}
+
+#app-nav li.has-children.open > ul {
+  display: block;
+}
+
+#app-nav li.has-children ul li a {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+/* ============================================================
+   User Menu
+   ============================================================ */
+
+#user-menu {
+  position: relative;
+}
+
+.user-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.user-menu-toggle:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.user-menu-toggle:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.user-menu-toggle .user-name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-toggle .dropdown-arrow {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+#prefs-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: var(--space-2);
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--border-default);
+  list-style: none;
+}
+
+#prefs-menu > li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#prefs-menu > li > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+#prefs-menu > li > a:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+#prefs-menu > li > a:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Create Ticket Button
+   ============================================================ */
+
+.create-ticket-btn,
+.btn-create {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2-5);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-inverse);
+  background: var(--accent-blue);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.create-ticket-btn:hover,
+.btn-create:hover {
+  background: var(--accent-blue-hover);
+  color: var(--text-inverse);
+  text-decoration: none;
+}
+
+.create-ticket-btn:focus-visible,
+.btn-create:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Dropdown Menus - Bootstrap provides base styles, lumen overrides below */
+
+/* Lumen-specific dropdown item overrides */
+.dropdown-menu li a,
+.dropdown-item {
+  font-size: var(--text-sm);
+  transition: all var(--transition-fast);
+}
+
+/* ============================================================
+   User Menu Dropdown (lumen-specific)
+   ============================================================ */
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 160px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  z-index: var(--z-dropdown);
+  padding: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.user-dropdown.show {
+  display: block;
+}
+
+.user-dropdown li {
+  list-style: none;
+  margin: 0;
+}
+
+.user-dropdown li a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.user-dropdown li a:hover {
+  background: var(--bg-hover);
+}
+
+.user-dropdown .divider {
+  height: 1px;
+  background: var(--border-default);
+  margin: var(--space-1) 0;
+}

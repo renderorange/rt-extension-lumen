@@ -1,0 +1,330 @@
+/* ==========================================================================
+   Lumen Theme - CSS Custom Properties
+   Modern, minimal design inspired by Linear
+   
+   These variables define the entire design system.
+   ========================================================================== */
+
+:root {
+  /* ============================================================
+     Colors - Light Theme
+     ============================================================ */
+  
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafbfc;
+  --bg-tertiary: #f4f5f7;
+  --bg-hover: #ebecf0;
+  --bg-active: #e2e5ea;
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  
+  /* Text */
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b778c;
+  --text-tertiary: #97a0af;
+  --text-inverse: #ffffff;
+  
+  /* Borders */
+  --border-default: #e1e4e8;
+  --border-strong: #d0d4da;
+  --border-focus: #0052cc;
+  
+  /* Accent Colors */
+  --accent-blue: #4a7fd4;
+  --accent-blue-hover: #3a6bb8;
+  --accent-blue-subtle: #edf3fb;
+  
+  --accent-green: #00875a;
+  --accent-green-hover: #006644;
+  --accent-green-subtle: #e3fcef;
+  
+  --accent-red: #de350b;
+  --accent-red-hover: #c92e0a;
+  --accent-red-subtle: #ffebe6;
+  
+  --accent-orange: #ff991f;
+  --accent-orange-hover: #e68a1a;
+  --accent-orange-subtle: #fff7e6;
+  
+  --accent-purple: #6554c0;
+  --accent-purple-hover: #5445a6;
+  --accent-purple-subtle: #eae6ff;
+  
+  --accent-yellow: #ffab00;
+  --accent-yellow-hover: #e69900;
+  --accent-yellow-subtle: #fff7d6;
+  --accent-yellow-text: #8a6914;
+  
+  /* Status Colors */
+  --status-new: var(--accent-blue);
+  --status-new-bg: var(--accent-blue-subtle);
+  --status-open: var(--accent-green);
+  --status-open-bg: var(--accent-green-subtle);
+  --status-pending: var(--accent-orange);
+  --status-pending-bg: var(--accent-orange-subtle);
+  --status-resolved: var(--text-tertiary);
+  --status-resolved-bg: var(--bg-tertiary);
+  --status-closed: var(--text-secondary);
+  --status-closed-bg: var(--bg-secondary);
+  
+  /* ============================================================
+     Typography
+     ============================================================ */
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Source Code Pro', Consolas, 'Liberation Mono', Menlo, monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.625rem;     /* 10px */
+  --text-sm: 0.6875rem;    /* 11px */
+  --text-base: 0.75rem;    /* 12px */
+  --text-md: 0.8125rem;    /* 13px */
+  --text-lg: 0.9375rem;    /* 15px */
+  --text-xl: 1.125rem;     /* 18px */
+  --text-2xl: 1.375rem;    /* 22px */
+  --text-3xl: 1.75rem;     /* 28px */
+  
+  /* Font Weights */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  
+  /* Letter Spacing */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  
+  /* ============================================================
+     Spacing
+     ============================================================ */
+  
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  
+  /* ============================================================
+     Border Radius
+     ============================================================ */
+  
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+  
+  /* ============================================================
+     Shadows
+     ============================================================ */
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.12);
+  
+  /* ============================================================
+     Layout
+     ============================================================ */
+  
+  --header-height: 42px;
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 48px;
+  --content-max-width: 1400px;
+  --form-max-width: 720px;
+  
+  /* ============================================================
+     Transitions
+     ============================================================ */
+  
+  --transition-fast: 0.1s ease;
+  --transition-normal: 0.15s ease;
+  --transition-slow: 0.25s ease;
+  
+  /* ============================================================
+     Z-Index Scale
+     ============================================================ */
+  
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-tooltip: 600;
+}
+
+
+/* ============================================================
+   Dark Theme
+   ============================================================ */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  
+  /* Backgrounds */
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-hover: #30363d;
+  --bg-active: #3d444d;
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  
+  /* Text */
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-tertiary: #6e7681;
+  --text-inverse: #0d1117;
+  
+  /* Borders */
+  --border-default: #30363d;
+  --border-strong: #484f58;
+  --border-focus: #58a6ff;
+  
+  /* Accent Colors - Adjusted for dark backgrounds */
+  --accent-blue: #58a6ff;
+  --accent-blue-hover: #79b8ff;
+  --accent-blue-subtle: rgba(88, 166, 255, 0.15);
+  
+  --accent-green: #3fb950;
+  --accent-green-hover: #56d364;
+  --accent-green-subtle: rgba(63, 185, 80, 0.15);
+  
+  --accent-red: #f85149;
+  --accent-red-hover: #fa7a72;
+  --accent-red-subtle: rgba(248, 81, 73, 0.15);
+  
+  --accent-orange: #d29922;
+  --accent-orange-hover: #e3b341;
+  --accent-orange-subtle: rgba(210, 153, 34, 0.15);
+  
+  --accent-purple: #a371f7;
+  --accent-purple-hover: #bc8ffa;
+  --accent-purple-subtle: rgba(163, 113, 247, 0.15);
+  
+  --accent-yellow: #e3b341;
+  --accent-yellow-hover: #f0c14a;
+  --accent-yellow-subtle: rgba(227, 179, 65, 0.15);
+  --accent-yellow-text: #d29922;
+  
+  /* Status Colors - Dark Mode */
+  --status-new-bg: var(--accent-blue-subtle);
+  --status-open-bg: var(--accent-green-subtle);
+  --status-pending-bg: var(--accent-orange-subtle);
+  --status-resolved-bg: var(--bg-tertiary);
+  --status-closed-bg: var(--bg-secondary);
+  
+  /* Shadows - Darker for dark backgrounds */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] body {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] #app {
+  background-color: #0d1117 !important;
+}
+
+[data-theme="dark"] #sidebar {
+  background-color: #161b22 !important;
+  border-color: #30363d !important;
+}
+
+/* System preference for dark mode (when no explicit theme set) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    
+    /* Backgrounds */
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #21262d;
+    --bg-hover: #30363d;
+    --bg-active: #3d444d;
+    --bg-overlay: rgba(0, 0, 0, 0.6);
+    
+    /* Text */
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-tertiary: #6e7681;
+    --text-inverse: #0d1117;
+    
+    /* Borders */
+    --border-default: #30363d;
+    --border-strong: #484f58;
+    --border-focus: #58a6ff;
+    
+    /* Accent Colors */
+    --accent-blue: #58a6ff;
+    --accent-blue-hover: #79b8ff;
+    --accent-blue-subtle: rgba(88, 166, 255, 0.15);
+    
+    --accent-green: #3fb950;
+    --accent-green-hover: #56d364;
+    --accent-green-subtle: rgba(63, 185, 80, 0.15);
+    
+    --accent-red: #f85149;
+    --accent-red-hover: #fa7a72;
+    --accent-red-subtle: rgba(248, 81, 73, 0.15);
+    
+    --accent-orange: #d29922;
+    --accent-orange-hover: #e3b341;
+    --accent-orange-subtle: rgba(210, 153, 34, 0.15);
+    
+    --accent-purple: #a371f7;
+    --accent-purple-hover: #bc8ffa;
+    --accent-purple-subtle: rgba(163, 113, 247, 0.15);
+    
+    --accent-yellow: #e3b341;
+    --accent-yellow-hover: #f0c14a;
+    --accent-yellow-subtle: rgba(227, 179, 65, 0.15);
+    --accent-yellow-text: #d29922;
+    
+    /* Status Colors */
+    --status-new-bg: var(--accent-blue-subtle);
+    --status-open-bg: var(--accent-green-subtle);
+    --status-pending-bg: var(--accent-orange-subtle);
+    --status-resolved-bg: var(--bg-tertiary);
+    --status-closed-bg: var(--bg-secondary);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+
+/* ============================================================
+   Reduced Motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
+    --transition-slow: 0.01ms;
+  }
+}

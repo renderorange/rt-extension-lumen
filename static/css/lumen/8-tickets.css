@@ -1,0 +1,476 @@
+/* ==========================================================================
+   Lumen Theme - Ticket Display
+   Clean, modern ticket view
+   ========================================================================== */
+
+/* ============================================================
+   Ticket Header
+   ============================================================ */
+
+.ticket-header {
+  margin-bottom: var(--space-6);
+}
+
+.ticket-id {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-1);
+}
+
+.ticket-subject {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Old header h1 override */
+#header h1.ticket-subject {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  padding: 0;
+  border: none;
+}
+
+/* ============================================================
+   Ticket Action Bar
+   ============================================================ */
+
+.ticket-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ticket-actions .action-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ticket-actions .action-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-default);
+  margin: 0 var(--space-2);
+}
+
+/* Status dropdown in action bar */
+.ticket-status-select {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ============================================================
+   Ticket Layout - Two Column
+   ============================================================ */
+
+.ticket-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--space-6);
+}
+
+.ticket-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ticket-main {
+  min-width: 0; /* Prevent overflow */
+}
+
+@media (max-width: 1024px) {
+  .ticket-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .ticket-sidebar {
+    order: 2;
+  }
+  
+  .ticket-main {
+    order: 1;
+  }
+}
+
+/* ============================================================
+   Ticket History / Comments
+   ============================================================ */
+
+.history-container {
+  margin-top: var(--space-4);
+}
+
+.history .transaction {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.history .transaction:last-child {
+  border-bottom: none;
+}
+
+/* Transaction Header (who, when, type) */
+.history .transaction .metadata {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.history .transaction .author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.history .transaction .author-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+}
+
+.history .transaction .date {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.history .transaction .transaction-type {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  padding: var(--space-0-5) var(--space-1);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin-left: auto;
+}
+
+/* Message transactions (comments) */
+.history .transaction.message {
+  background: var(--bg-primary);
+  padding: var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+}
+
+/* Message body */
+.history .transaction .messagebody {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-primary);
+  max-width: 70ch;
+}
+
+.history .transaction .messagebody p {
+  margin-bottom: var(--space-3);
+}
+
+.history .transaction .messagebody p:last-child {
+  margin-bottom: 0;
+}
+
+/* Plain text messages */
+.history .transaction .plain-text-white-space {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  white-space: pre-wrap;
+  padding: var(--space-3);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+/* Message headers (From, To, Subject) */
+.history .transaction .message-headers {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.history .transaction .message-header-key {
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.history .transaction .message-header-value {
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* Quoted text */
+.history .transaction blockquote {
+  border-left: 3px solid var(--border-default);
+  padding-left: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* Transaction actions */
+.history .transaction .actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-default);
+}
+
+.history .transaction .actions .action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+}
+
+.history .transaction .actions .action-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   Ticket Basics Widget
+   ============================================================ */
+
+.ticket-info-basics .row .value {
+  font-weight: var(--weight-medium);
+}
+
+/* Priority indicator */
+.priority-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  margin-right: var(--space-1);
+}
+
+.priority-indicator.low { background: var(--accent-green); }
+.priority-indicator.normal { background: var(--accent-blue); }
+.priority-indicator.high { background: var(--accent-orange); }
+.priority-indicator.critical { background: var(--accent-red); }
+
+/* ============================================================
+   Ticket Form / Reply Box
+   ============================================================ */
+
+.reply-form {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.reply-form-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.reply-type-tabs {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.reply-type-tabs .tab {
+  padding: var(--space-1-5) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.reply-type-tabs .tab:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.reply-type-tabs .tab.active {
+  background: var(--accent-blue);
+  color: var(--text-inverse);
+}
+
+/* Rich text editor */
+.messagebox,
+.ck.ck-editor {
+  min-height: 200px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ck.ck-editor .ck.ck-content {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  padding: var(--space-3);
+  min-height: 200px;
+}
+
+/* Reply form actions */
+.reply-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-default);
+}
+
+.reply-form-actions .left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.reply-form-actions .right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ============================================================
+   Inline Edit
+   ============================================================ */
+
+.inline-edit-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-0-5) var(--space-1);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.inline-edit-trigger:hover {
+  background: var(--bg-hover);
+}
+
+.inline-edit-trigger svg {
+  width: 10px;
+  height: 10px;
+  color: var(--text-tertiary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.inline-edit-trigger:hover svg {
+  opacity: 1;
+}
+
+/* ============================================================
+   Ticket Links
+   ============================================================ */
+
+.ticket-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ticket-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.ticket-link-type {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.ticket-link-id {
+  font-weight: var(--weight-medium);
+  color: var(--accent-blue);
+}
+
+.ticket-link-subject {
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Attachments
+   ============================================================ */
+
+.attachment-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.attachment-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.attachment-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+}
+
+.attachment-name {
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.attachment-size {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+.attachment-download {
+  padding: var(--space-1);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.attachment-download:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}

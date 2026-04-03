@@ -1,0 +1,188 @@
+<%doc>
+Lumen Theme - AfterMenus Plugin
+</%doc>
+<script type="text/javascript">
+(function() {
+  'use strict';
+
+  // Disable htmx built-in scroll restoration
+  if (typeof htmx !== 'undefined') {
+    htmx.config.scrollIntoViewOnBoost = false;
+  }
+
+  // Title change handler for htmx navigation
+  // RT sends HX-Trigger: {"titleChanged": "..."} headers
+  // Update both document.title and #page-title
+  document.body.addEventListener('titleChanged', function(evt) {
+    if (evt.detail && evt.detail.value) {
+      document.title = evt.detail.value;
+      var pageTitle = document.querySelector('#page-title h1');
+      if (pageTitle) {
+        pageTitle.textContent = evt.detail.value;
+      }
+    }
+  });
+
+  // Capture XHR response for title extraction during boosted navigation
+  var lastXhrResponse = null;
+  
+  // Store the full response before htmx processes it
+  htmx.defineExtension('capture-title', {
+    onEvent: function(name, evt) {
+      if (name === 'htmx:afterRequest') {
+        lastXhrResponse = evt.detail.xhr.responseText;
+      }
+    }
+  });
+
+  // Extract and update page title from full HTML response
+  document.body.addEventListener('htmx:beforeSwap', function(evt) {
+    var responseHTML = evt.detail.serverResponse || lastXhrResponse;
+    if (responseHTML) {
+      // Parse the full HTML to extract elements outside .main-container
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(responseHTML, 'text/html');
+      
+      // Update #page-title h1
+      var newPageTitle = doc.querySelector('#page-title h1');
+      if (newPageTitle) {
+        var currentPageTitle = document.querySelector('#page-title h1');
+        if (currentPageTitle) {
+          currentPageTitle.textContent = newPageTitle.textContent;
+        }
+      }
+      
+      // Update document.title
+      var newDocTitle = doc.querySelector('title');
+      if (newDocTitle && newDocTitle.textContent) {
+        document.title = newDocTitle.textContent;
+      }
+    }
+    lastXhrResponse = null;
+  });
+
+  // Theme toggle
+  function initThemeToggle() {
+    var toggle = document.getElementById('theme-toggle');
+    if (toggle && !toggle._done) {
+      toggle._done = true;
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        var theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('rt-lumen-theme', theme);
+      });
+    }
+  }
+  
+  // User dropdown
+  document.addEventListener('click', function(e) {
+    var toggle = e.target.closest('.user-menu-toggle');
+    if (toggle) {
+      e.preventDefault();
+      e.stopPropagation();
+      var dropdown = toggle.nextElementSibling;
+      if (dropdown) dropdown.classList.toggle('show');
+      document.querySelectorAll('.user-dropdown.show').forEach(function(d) { 
+        if (d !== dropdown) d.classList.remove('show'); 
+      });
+    } else if (!e.target.closest('.user-dropdown')) {
+      document.querySelectorAll('.user-dropdown.show').forEach(function(d) { 
+        d.classList.remove('show'); 
+      });
+    }
+  });
+  
+  // Menu toggle chevron - expand/collapse submenu
+  document.addEventListener('click', function(e) {
+    var toggle = e.target.closest('.menu-toggle');
+    if (!toggle) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    
+    var li = toggle.closest('li.has-children');
+    if (!li) return;
+    
+    // Close siblings at same level
+    var parentUl = li.parentElement;
+    if (parentUl) {
+      parentUl.querySelectorAll(':scope > li.has-children.open').forEach(function(openLi) {
+        if (openLi !== li) openLi.classList.remove('open');
+      });
+    }
+    
+    // Toggle this one
+    li.classList.toggle('open');
+    
+    return false;
+  }, true); // Capture phase
+  
+  // Active states - expand path to current page
+  function setActiveMenuStates() {
+    var currentPath = window.location.pathname;
+    document.querySelectorAll('#app-nav li').forEach(function(li) {
+      li.classList.remove('active', 'has-active-child', 'open');
+    });
+    document.querySelectorAll('#app-nav a').forEach(function(link) {
+      var href = link.getAttribute('href');
+      if (href && href !== '#' && !href.startsWith('javascript')) {
+        var linkPath = href.split('?')[0];
+        if (currentPath.indexOf(linkPath) === 0 && linkPath.length > 1) {
+          var li = link.closest('li');
+          if (li) {
+            li.classList.add('active');
+            var parent = li.parentElement && li.parentElement.closest('li');
+            while (parent) {
+              if (parent.classList.contains('has-children')) {
+                parent.classList.add('open', 'has-active-child');
+              }
+              parent = parent.parentElement && parent.parentElement.closest('li');
+            }
+          }
+        }
+      }
+    });
+  }
+  
+  // Widget dropdowns
+  function initWidgetDropdowns() {
+    if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(t) {
+        if (!t._bsInit) { 
+          try { 
+            new bootstrap.Dropdown(t); 
+            t._bsInit = true; 
+          } catch(e) {} 
+        }
+      });
+    }
+  }
+  
+  function init() {
+    initThemeToggle();
+    setActiveMenuStates();
+    initWidgetDropdowns();
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  
+  // Scroll to top only on full-page boosted navigations (body target), not widget reloads
+  document.body.addEventListener('htmx:afterSwap', function(evt) {
+    if (evt.target === document.body) {
+      window.scrollTo(0, 0);
+    }
+  });
+
+  document.body.addEventListener('htmx:afterSettle', function() {
+    setActiveMenuStates();
+    initWidgetDropdowns();
+  });
+  
+})();
+</script>

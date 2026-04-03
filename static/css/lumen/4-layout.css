@@ -1,0 +1,335 @@
+/* ==========================================================================
+   Lumen Theme - Layout System
+   Grid-based layout with sidebar + main content
+   ========================================================================== */
+
+/* ============================================================
+   App Container - Grid Layout
+   ============================================================ */
+
+#app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* ============================================================
+   Sidebar
+   ============================================================ */
+
+#sidebar {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  width: var(--sidebar-width);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-default);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: var(--z-fixed);
+}
+
+/* Sidebar header (logo area) */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  height: 42px;
+  min-height: 42px;
+  gap: var(--space-2);
+}
+
+.sidebar-toggle {
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 24px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sidebar-toggle span {
+  width: 100%;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 1px;
+  transition: all var(--transition-fast);
+}
+
+/* ============================================================
+   Logo Area
+   ============================================================ */
+
+#logo {
+  display: flex;
+  align-items: center;
+}
+
+#logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+#logo img {
+  height: 28px;
+  width: auto;
+}
+
+#logo .rtname {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-md);
+  color: var(--text-primary);
+  margin-left: var(--space-2);
+}
+
+/* ============================================================
+   Main Content Area
+   ============================================================ */
+
+#main-content {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#top-header {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+#quickbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  height: 42px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
+  gap: var(--space-3);
+}
+
+.quickbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.quickbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+#page-title {
+  flex: 1;
+  min-width: 0;
+}
+
+#page-title h1 {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Page navigation inside quickbar */
+#quickbar #page-navigation {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  background: transparent;
+  border-bottom: none;
+  flex-shrink: 0;
+}
+
+#page-navigation nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+#page-navigation ul.page-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+}
+
+#page-navigation ul.page-menu li {
+  margin: 0;
+}
+
+#page-navigation ul.page-menu li a.nav-link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+#page-navigation ul.page-menu li a.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  text-decoration: none;
+}
+
+#page-navigation ul.page-menu li a.nav-link.active {
+  color: var(--text-primary);
+  background: var(--bg-active);
+}
+
+/* Topactions inside quickbar */
+#quickbar #topactions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Content Area
+   ============================================================ */
+
+.main-container {
+  flex: 1;
+  padding: 0 var(--space-4) var(--space-4);
+  background: var(--bg-primary);
+}
+
+#body {
+  flex: 1;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+#footer {
+  padding: var(--space-4);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-default);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+#footer p {
+  margin: 0;
+}
+
+#footer a {
+  color: var(--text-secondary);
+}
+
+#footer a:hover {
+  color: var(--accent-blue);
+}
+
+/* ============================================================
+   RT Header Container
+   ============================================================ */
+
+#rt-header-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+
+/* ============================================================
+    Theme Toggle
+    ============================================================ */
+
+/* Theme toggle is defined in z-utilities.css */
+
+/* ============================================================
+   Responsive - Desktop First Sidebar Collapse
+   ============================================================ */
+
+/* Collapsed sidebar - defined in z-utilities.css */
+
+/* ============================================================
+   Responsive - Mobile
+   ============================================================ */
+
+@media (max-width: 768px) {
+  #app {
+    grid-template-columns: 1fr;
+  }
+  
+  #sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    z-index: var(--z-fixed);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  
+  #main-content {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+  
+  #top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+  }
+  
+  .main-container {
+    margin-top: var(--header-height);
+    padding-top: var(--space-4);
+  }
+  
+  .mobile-menu-toggle {
+    display: flex !important;
+  }
+}
+
+/* ============================================================
+   Utility Classes
+   ============================================================ */
+
+.content-wrapper {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.form-wrapper {
+  max-width: var(--form-max-width);
+  margin: 0 auto;
+}

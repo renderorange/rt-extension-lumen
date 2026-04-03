@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Lumen Theme - Bootstrap Variable Mapping
+   Overrides Bootstrap's --bs-* defaults with lumen design tokens.
+   This file comes AFTER bootstrap.css in the import order.
+   ========================================================================== */
+
+/* ============================================================
+   Light Theme Overrides
+   ============================================================ */
+
+:root,
+[data-bs-theme="light"] {
+  /* Brand colors */
+  --bs-primary: var(--accent-blue);
+  --bs-primary-rgb: 74, 127, 212;
+  --bs-primary-text-emphasis: #3668b0;
+  --bs-primary-bg-subtle: var(--accent-blue-subtle);
+  --bs-primary-border-subtle: #b8d0ee;
+
+  --bs-success: var(--accent-green);
+  --bs-success-rgb: 0, 135, 90;
+  --bs-success-bg-subtle: var(--accent-green-subtle);
+
+  --bs-danger: var(--accent-red);
+  --bs-danger-rgb: 222, 53, 11;
+  --bs-danger-bg-subtle: var(--accent-red-subtle);
+
+  --bs-warning: var(--accent-orange);
+  --bs-warning-rgb: 255, 153, 31;
+  --bs-warning-bg-subtle: var(--accent-orange-subtle);
+
+  --bs-info: var(--accent-purple);
+  --bs-info-rgb: 101, 84, 192;
+
+  /* Body and backgrounds */
+  --bs-body-bg: var(--bg-primary);
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-body-color: var(--text-primary);
+  --bs-body-color-rgb: 26, 26, 26;
+  --bs-secondary-bg: var(--bg-tertiary);
+  --bs-tertiary-bg: var(--bg-secondary);
+
+  /* Typography */
+  --bs-body-font-family: var(--font-sans);
+  --bs-body-font-size: 0.8125rem; /* var(--text-base) */
+  --bs-body-line-height: var(--leading-normal);
+  --bs-font-monospace: var(--font-mono);
+
+  /* Borders */
+  --bs-border-color: var(--border-default);
+  --bs-border-color-translucent: rgba(0, 0, 0, 0.1);
+  --bs-border-radius: var(--radius-md);
+  --bs-border-radius-sm: var(--radius-sm);
+  --bs-border-radius-lg: var(--radius-lg);
+  --bs-border-radius-xl: var(--radius-xl);
+  --bs-border-radius-pill: var(--radius-full);
+
+  /* Focus */
+  --bs-focus-ring-color: rgba(74, 127, 212, 0.25);
+
+  /* Emphasis and secondary text */
+  --bs-emphasis-color: var(--text-primary);
+  --bs-secondary-color: var(--text-secondary);
+
+  /* Links */
+  --bs-link-color: var(--text-primary);
+  --bs-link-hover-color: var(--accent-blue);
+  --bs-link-color-rgb: 26, 26, 26;
+  --bs-link-hover-color-rgb: 74, 127, 212;
+  --bs-link-hover-decoration: underline;
+
+  /* Shadows */
+  --bs-box-shadow: var(--shadow-md);
+  --bs-box-shadow-sm: var(--shadow-sm);
+  --bs-box-shadow-lg: var(--shadow-lg);
+}
+
+/* ============================================================
+   Dark Theme Overrides
+   ============================================================ */
+
+[data-bs-theme="dark"] {
+  /* Brand colors */
+  --bs-primary: var(--accent-blue);
+  --bs-primary-rgb: 88, 166, 255;
+  --bs-primary-text-emphasis: #79b8ff;
+  --bs-primary-bg-subtle: var(--accent-blue-subtle);
+  --bs-primary-border-subtle: rgba(88, 166, 255, 0.4);
+
+  --bs-success: var(--accent-green);
+  --bs-success-rgb: 63, 185, 80;
+  --bs-success-bg-subtle: var(--accent-green-subtle);
+
+  --bs-danger: var(--accent-red);
+  --bs-danger-rgb: 248, 81, 73;
+  --bs-danger-bg-subtle: var(--accent-red-subtle);
+
+  --bs-warning: var(--accent-orange);
+  --bs-warning-rgb: 210, 153, 34;
+  --bs-warning-bg-subtle: var(--accent-orange-subtle);
+
+  --bs-info: var(--accent-purple);
+  --bs-info-rgb: 163, 113, 247;
+
+  /* Body and backgrounds */
+  --bs-body-bg: var(--bg-primary);
+  --bs-body-bg-rgb: 13, 17, 23;
+  --bs-body-color: var(--text-primary);
+  --bs-body-color-rgb: 230, 237, 243;
+  --bs-secondary-bg: var(--bg-tertiary);
+  --bs-tertiary-bg: var(--bg-secondary);
+
+  /* Borders */
+  --bs-border-color: var(--border-default);
+
+  /* Emphasis and secondary text */
+  --bs-emphasis-color: var(--text-primary);
+  --bs-secondary-color: var(--text-secondary);
+
+  /* Links */
+  --bs-link-color: var(--text-primary);
+  --bs-link-hover-color: var(--accent-blue);
+
+  /* Shadows - darker for dark mode */
+  --bs-box-shadow: var(--shadow-md);
+  --bs-box-shadow-sm: var(--shadow-sm);
+  --bs-box-shadow-lg: var(--shadow-lg);
+
+  /* Form validation */
+  --bs-form-valid-color: var(--accent-green);
+  --bs-form-valid-border-color: var(--accent-green);
+  --bs-form-invalid-color: var(--accent-red);
+  --bs-form-invalid-border-color: var(--accent-red);
+}

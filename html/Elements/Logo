@@ -1,0 +1,43 @@
+%# Lumen Theme - Logo Override
+%# Simplified logo rendering
+<div id="logo">
+<a href="<%$ARGS{'LogoLinkURL'}||RT->Config->Get('LogoLinkURL')%>">
+% my $alt_text = loc($ARGS{'LogoAltText'}||RT->Config->Get('LogoAltText')||'RT');
+% if ($Size eq 'Small' || !$Size) {
+%   my $small_logo;
+%   if (blessed $RT::System) {
+%     $small_logo = $RT::System->FirstAttribute('UserSmallLogo');
+%   }
+%   if ($small_logo && ref $small_logo->Content eq 'HASH' && $small_logo->Content->{'data'}) {
+  <img src="<% RT->Config->Get('WebPath') %>/NoAuth/Helpers/CustomLogo/<% $small_logo->Content->{'hash'} %>" 
+       alt="<%$alt_text%>" class="logo-small" />
+%   } else {
+  <img src="<%$ARGS{'SmallLogoURL'}||RT->Config->Get('SmallLogoURL')%>" 
+       alt="<%$alt_text%>" class="logo-small" />
+%   }
+% }
+% if ($Size eq 'Large' || !$Size) {
+%   my $large_logo;
+%   if (blessed $RT::System) {
+%     $large_logo = $RT::System->FirstAttribute('UserLogo');
+%   }
+%   if ($large_logo && ref $large_logo->Content eq 'HASH' && $large_logo->Content->{'data'}) {
+  <img src="<% RT->Config->Get('WebPath') %>/NoAuth/Helpers/CustomLogo/<% $large_logo->Content->{'hash'} %>" 
+       alt="<%$alt_text%>" class="logo-large" />
+%   } else {
+  <img src="<%$ARGS{'LogoURL'}||RT->Config->Get('LogoURL')%>" 
+       alt="<%$alt_text%>" class="logo-large" />
+%   }
+% }
+</a>
+% if ( $ShowName ) {
+<span class="rt-name"><% $Name || loc("RT for [_1]", RT->Config->Get('rtname')) %></span>
+% }
+</div>
+<%ARGS>
+$ShowName => 0
+$OnlyCustom => 0
+$Name => undef
+$id => 'logo'
+$Size => ''
+</%ARGS>
