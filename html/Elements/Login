@@ -1,0 +1,66 @@
+%# Lumen Theme - Login Override
+%# Centered login page without sidebar/header chrome
+% $m->callback( %ARGS, CallbackName => 'Header' );
+<& /Elements/Header, Title => loc('Login'), Focus => '#user', RichText => 0, ShowBar => 0, ShowTitle => 0, ShowMenu => 0 &>
+
+<div id="login-page">
+  <div id="login-box">
+    <div class="login-logo">
+      <& /Elements/Logo, %ARGS, Size => 'Small' &>
+    </div>
+
+    <&| /Widgets/TitleBox, title => loc('Login'), titleright => $RT::VERSION, hideable => 0, htmx_load => 0 &>
+
+% $m->callback( %ARGS, CallbackName => 'BeforeForm' );
+
+% unless (RT->Config->Get('WebRemoteUserAuth') and !RT->Config->Get('WebFallbackToRTLogin')) {
+    <form hx-boost="false" id="login" name="login" method="post" action="<% RT->Config->Get('WebPath') %>/NoAuth/Login.html">
+
+      <div class="mb-3">
+        <label for="user" class="form-label"><% loc("Username") %></label>
+        <input class="form-control" type="text" name="user" value="<%$user%>" id="user" autocapitalize="off" placeholder="" autocomplete="username" />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label"><% loc("Password") %></label>
+        <input class="form-control" type="password" name="pass" id="password" placeholder="" autocomplete="current-password" />
+      </div>
+
+      <input type="hidden" name="next" value="<% $next %>" />
+
+      <script type="text/javascript">
+      jQuery(function(){
+          if (window.location.hash) {
+              var form = jQuery("form[name=login]");
+              form.attr('action', form.attr('action') + '#' + window.location.hash.replace(/^#/, ''));
+          }
+      });
+      </script>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary"><% loc('Login') %></button>
+      </div>
+
+%   $m->callback( %ARGS );
+
+    </form>
+% }
+
+    </&>
+
+    <& /Elements/LoginHelp &>
+
+    <& /Elements/ListActions,
+        title       => loc('Error'),
+        titlebox    => { class => 'error', hideable => 0 },
+        actions     => $actions
+    &>
+  </div>
+</div>
+
+<& /Elements/Footer, Menu => 0, Debug => 0 &>
+<%ARGS>
+$next => ''
+$user => ""
+$actions => undef
+</%ARGS>

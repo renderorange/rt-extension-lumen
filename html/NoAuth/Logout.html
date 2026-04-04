@@ -1,0 +1,61 @@
+%# Lumen Theme - Logout Override
+%# Centered logout page matching login style
+<& /Elements/Header, Title => loc('Logout'), Refresh => RT->Config->Get('LogoutRefresh'), ShowBar => 0, ShowTitle => 0, ShowMenu => 0 &>
+
+<div id="login-page">
+  <div id="login-box">
+    <div class="login-logo">
+      <& /Elements/Logo, %ARGS, Size => 'Small' &>
+    </div>
+
+    <&| /Widgets/TitleBox, title => loc('Logged out'), hideable => 0 &>
+    <p><&|/l&>You have been logged out of RT.</&></p>
+    <p><a href="<% RT->Config->Get('WebPath') %>/"><&|/l&>You're welcome to login again</&></a></p>
+    </&>
+
+% $m->callback( %ARGS );
+  </div>
+</div>
+
+<& /Elements/Footer, Menu => 0, Debug => 0 &>
+
+% $m->abort();
+
+<%INIT>
+my $URL = RT->Config->Get('WebPath')."/";
+
+$m->callback( %ARGS, CallbackName => 'BeforeSessionDelete' );
+
+my $username;
+my $remote_addr
+    = RT::Interface::Web::RequestENV('HTTP_X_FORWARDED_FOR') || RT::Interface::Web::RequestENV('REMOTE_ADDR');
+if (keys %session) {
+    $username = $session{'CurrentUser'}->Name;
+    my $externally_authed = $session{'WebExternallyAuthed'};
+
+    my $LogoutURL = RT->Config->Get('LogoutURL');
+    if ( $externally_authed && $LogoutURL
+         && $LogoutURL ne '/NoAuth/Logout.html' ) {
+        $URL = $LogoutURL;
+    }
+
+    RT::Interface::Web::InstantiateNewSession();
+    RT::Interface::Web::Session::Set(
+        Key   => 'CurrentUser',
+        Value => RT::CurrentUser->new,
+    );
+
+    if ( defined $username ) {
+        if ( $externally_authed ) {
+            RT->Logger->info("Successful cleared session for $username from $remote_addr");
+        }
+        else {
+            RT->Logger->info("Successful logout for $username from $remote_addr");
+        }
+    }
+}
+
+$m->callback( %ARGS, CallbackName => 'AfterSessionDelete' );
+$m->callback( %ARGS, CallbackName => 'ModifyLoginRedirect', URL => \$URL );
+$m->notes->{RefreshURL} = $URL;
+</%INIT>

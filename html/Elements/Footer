@@ -1,9 +1,11 @@
 %# Lumen Theme - Footer Override
 %# Clean footer with theme toggle support
 % $m->callback( %ARGS );
+% if ( $Menu ) {
     </div><%# Close main-container %>
   </main><%# Close main-content %>
 </div><%# Close app %>
+% }
 
 <footer id="footer">
   <div class="footer-content">

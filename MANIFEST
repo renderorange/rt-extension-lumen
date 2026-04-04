@@ -1,6 +1,8 @@
+Changes
 html/Elements/Footer
 html/Elements/Header
 html/Elements/InlineEditLink
+html/Elements/Login
 html/Elements/Logo
 html/Elements/Menu
 html/Elements/PageLayout
@@ -8,14 +10,15 @@ html/Elements/PersonalQuickbar
 html/NoAuth/css/lumen/AfterMenus
 html/NoAuth/css/lumen/BeforeNav
 html/NoAuth/css/lumen/InHeader
+html/NoAuth/Logout.html
 html/Widgets/Spinner
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
+inc/Module/Install/AuthorTests.pm
+inc/Module/Install/AutoInstall.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
 inc/Module/Install/Fetch.pm
-inc/Module/Install/AuthorTests.pm
-inc/Module/Install/AutoInstall.pm
 inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
@@ -27,11 +30,9 @@ inc/Module/Install/WriteAll.pm
 inc/YAML/Tiny.pm
 lib/RT/Extension/Lumen.pm
 Makefile.PL
-Changes
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
-t/00-load.t
 static/css/lumen/0-variables.css
 static/css/lumen/1-bootstrap-variables.css
 static/css/lumen/10-forms.css
@@ -46,3 +47,4 @@ static/css/lumen/9-tables.css
 static/css/lumen/main.css
 static/css/lumen/z-utilities.css
 static/js/lumen-theme.js
+t/00-load.t

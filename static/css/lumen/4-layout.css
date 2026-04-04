@@ -230,6 +230,60 @@
 }
 
 /* ============================================================
+   Login Page
+   ============================================================ */
+
+#login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-4);
+  background: var(--bg-secondary);
+}
+
+#login-page #login-box {
+  width: 100%;
+  max-width: 400px;
+}
+
+#login-page .login-logo {
+  text-align: center;
+  margin-bottom: var(--space-3);
+}
+
+#login-page .login-logo #logo {
+  display: inline-flex;
+  justify-content: center;
+}
+
+#login-page .login-logo img {
+  height: 48px;
+  width: auto;
+}
+
+#login-page .login-logo .rtname {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+#login-page #login-box .card {
+  margin-bottom: var(--space-4);
+}
+
+/* Footer on login page - simplified */
+#login-page + #footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+}
+
+/* ============================================================
    Footer
    ============================================================ */
 

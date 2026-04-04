@@ -52,6 +52,8 @@
 % }
 </head>
   <body hx-boost="true" class="<% join( ' ',@{$ARGS{'BodyClass'}} ) %>">
+% my $IsLoginPage = !$ShowMenu && !$ShowBar && !$ShowTitle;
+% if ( !$IsLoginPage ) {
 <div id="app">
 % if ( $ShowMenu ) {
   <aside id="sidebar">
@@ -106,6 +108,7 @@
       </div>
 % }
     </header>
+% }
 % }
 
 % if ( $ShowMenu
